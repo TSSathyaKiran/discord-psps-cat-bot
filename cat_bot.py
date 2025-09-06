@@ -10,6 +10,10 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
+async def on_ready():
+    await bot.tree.sync()
+    print(f"Logged in as {bot.user}")
+@bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
@@ -38,10 +42,5 @@ async def cat(interaction: discord.Interaction):
     )
     embed.set_image(url=cat_pic)
     await interaction.response.send_message(embed=embed)
-
-@bot.event
-async def on_ready():
-    await bot.tree.sync()
-    print(f"Logged in as {bot.user}")
 
 bot.run("")
